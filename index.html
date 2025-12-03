@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danlio 的數位名片</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 350px;
+      width: 100%;
+    }
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      color: white;
+      font-weight: bold;
+    }
+    h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    .title {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 15px 20px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #06C755 0%, #04a648 100%);
+      color: white;
+    }
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .status.info {
+      background: #e7f3ff;
+      color: #004085;
+    }
+    .loading {
+      display: none;
+      margin-top: 20px;
+    }
+    .loading.show {
+      display: block;
+    }
+    .spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #f0f0f0;
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="avatar">D</div>
+    <h1>Danlio</h1>
+    <p class="title">打工仔</p>
+    
+    <button class="btn btn-primary" id="shareBtn" onclick="shareCard()">
+      📤 分享我的名片
+    </button>
+    
+    <button class="btn btn-secondary" onclick="previewCard()">
+      👁️ 預覽名片樣式
+    </button>
+    
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p style="margin-top: 10px; color: #666;">處理中...</p>
+    </div>
+    
+    <div id="status"></div>
+  </div>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script>
+    // 你的 LIFF ID
+    const LIFF_ID = '2008621616-5R4edpe4';
+    
+    // Flex Message 名片內容（可以橫向滑動的多卡片）
+    const flexMessage = {
+      type: 'carousel',
+      contents: [
+        // 第一張卡片 - 個人資訊
+        {
+          type: 'bubble',
+          size: 'mega',
+          header: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'box',
+                layout: 'horizontal',
+                contents: [
+                  {
+                    type: 'box',
+                    layout: 'vertical',
+                    contents: [
+                      {
+                        type: 'text',
+                        text: 'Danlio',
+                        color: '#ffffff',
+                        size: 'xl',
+                        weight: 'bold'
+                      },
+                      {
+                        type: 'text',
+                        text: '打工仔',
+                        color: '#ffffff99',
+                        size: 'md'
+                      }
+                    ],
+                    flex: 1
+                  },
+                  {
+                    type: 'box',
+                    layout: 'vertical',
+                    contents: [
+                      {
+                        type: 'text',
+                        text: 'D',
+                        color: '#667eea',
+                        size: 'xxl',
+                        weight: 'bold',
+                        align: 'center'
+                      }
+                    ],
+                    width: '60px',
+                    height: '60px',
+                    backgroundColor: '#ffffff',
+                    cornerRadius: '30px',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }
+                ],
+                alignItems: 'center'
+              }
+            ],
+            backgroundColor: '#667eea',
+            paddingAll: '20px'
+          },
+          body: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'text',
+                text: '關於我',
+                weight: 'bold',
+                size: 'lg',
+                margin: 'none'
+              },
+              {
+                type: 'text',
+                text: '嗨！我是 Danlio，一個努力工作的打工仔。很高興認識你！',
+                wrap: true,
+                color: '#666666',
+                size: 'sm',
+                margin: 'md'
+              },
+              {
+                type: 'separator',
+                margin: 'xl'
+              },
+              {
+                type: 'box',
+                layout: 'vertical',
+                contents: [
+                  {
+                    type: 'box',
+                    layout: 'horizontal',
+                    contents: [
+                      {
+                        type: 'text',
+                        text: '📍',
+                        size: 'sm',
+                        flex: 0
+                      },
+                      {
+                        type: 'text',
+                        text: '台灣',
+                        size: 'sm',
+                        color: '#666666',
+                        margin: 'md'
+                      }
+                    ]
+                  },
+                  {
+                    type: 'box',
+                    layout: 'horizontal',
+                    contents: [
+                      {
+                        type: 'text',
+                        text: '💼',
+                        size: 'sm',
+                        flex: 0
+                      },
+                      {
+                        type: 'text',
+                        text: '什麼都做',
+                        size: 'sm',
+                        color: '#666666',
+                        margin: 'md'
+                      }
+                    ],
+                    margin: 'sm'
+                  }
+                ],
+                margin: 'xl'
+              }
+            ],
+            paddingAll: '20px'
+          },
+          footer: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'button',
+                action: {
+                  type: 'uri',
+                  label: '💬 加我 LINE',
+                  uri: 'https://line.me/ti/p/~danlio'
+                },
+                style: 'primary',
+                color: '#06C755'
+              }
+            ],
+            paddingAll: '15px'
+          }
+        },
+        // 第二張卡片 - 聯絡方式
+        {
+          type: 'bubble',
+          size: 'mega',
+          header: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'text',
+                text: '📞 聯絡方式',
+                color: '#ffffff',
+                size: 'lg',
+                weight: 'bold'
+              }
+            ],
+            backgroundColor: '#764ba2',
+            paddingAll: '20px'
+          },
+          body: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'text',
+                text: '歡迎透過以下方式聯繫我',
+                color: '#666666',
+                size: 'sm',
+                wrap: true
+              },
+              {
+                type: 'separator',
+                margin: 'xl'
+              },
+              {
+                type: 'box',
+                layout: 'vertical',
+                contents: [
+                  {
+                    type: 'box',
+                    layout: 'horizontal',
+                    contents: [
+                      {
+                        type: 'text',
+                        text: '📱 電話',
+                        size: 'sm',
+                        color: '#999999',
+                        flex: 0
+                      },
+                      {
+                        type: 'text',
+                        text: '0912-345-678',
+                        size: 'sm',
+                        color: '#333333',
+                        align: 'end'
+                      }
+                    ]
+                  },
+                  {
+                    type: 'box',
+                    layout: 'horizontal',
+                    contents: [
+                      {
+                        type: 'text',
+                        text: '✉️ Email',
+                        size: 'sm',
+                        color: '#999999',
+                        flex: 0
+                      },
+                      {
+                        type: 'text',
+                        text: 'danlio@email.com',
+                        size: 'sm',
+                        color: '#333333',
+                        align: 'end'
+                      }
+                    ],
+                    margin: 'lg'
+                  }
+                ],
+                margin: 'xl'
+              }
+            ],
+            paddingAll: '20px'
+          },
+          footer: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'button',
+                action: {
+                  type: 'uri',
+                  label: '📞 打電話給我',
+                  uri: 'tel:0912345678'
+                },
+                style: 'primary',
+                color: '#764ba2'
+              },
+              {
+                type: 'button',
+                action: {
+                  type: 'uri',
+                  label: '✉️ 寄 Email',
+                  uri: 'mailto:danlio@email.com'
+                },
+                style: 'secondary',
+                margin: 'sm'
+              }
+            ],
+            paddingAll: '15px'
+          }
+        },
+        // 第三張卡片 - 社群連結
+        {
+          type: 'bubble',
+          size: 'mega',
+          header: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'text',
+                text: '🌐 社群連結',
+                color: '#ffffff',
+                size: 'lg',
+                weight: 'bold'
+              }
+            ],
+            backgroundColor: '#E4405F',
+            paddingAll: '20px'
+          },
+          body: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'text',
+                text: '追蹤我的社群帳號，獲得最新動態！',
+                color: '#666666',
+                size: 'sm',
+                wrap: true
+              }
+            ],
+            paddingAll: '20px'
+          },
+          footer: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'button',
+                action: {
+                  type: 'uri',
+                  label: '📘 Facebook',
+                  uri: 'https://facebook.com'
+                },
+                style: 'primary',
+                color: '#1877F2'
+              },
+              {
+                type: 'button',
+                action: {
+                  type: 'uri',
+                  label: '📸 Instagram',
+                  uri: 'https://instagram.com'
+                },
+                style: 'primary',
+                color: '#E4405F',
+                margin: 'sm'
+              },
+              {
+                type: 'button',
+                action: {
+                  type: 'uri',
+                  label: '🌐 個人網站',
+                  uri: 'https://google.com'
+                },
+                style: 'secondary',
+                margin: 'sm'
+              }
+            ],
+            paddingAll: '15px'
+          }
+        }
+      ]
+    };
+
+    // 初始化 LIFF
+    async function initLiff() {
+      try {
+        await liff.init({ liffId: LIFF_ID });
+        console.log('LIFF 初始化成功');
+        
+        if (!liff.isLoggedIn()) {
+          showStatus('請先登入 LINE', 'info');
+        }
+      } catch (error) {
+        console.error('LIFF 初始化失敗:', error);
+        showStatus('LIFF 初始化失敗: ' + error.message, 'error');
+      }
+    }
+
+    // 分享名片
+    async function shareCard() {
+      showLoading(true);
+      
+      try {
+        if (!liff.isLoggedIn()) {
+          liff.login();
+          return;
+        }
+
+        if (!liff.isApiAvailable('shareTargetPicker')) {
+          showStatus('你的 LINE 版本不支援此功能，請更新 LINE', 'error');
+          showLoading(false);
+          return;
+        }
+
+        const result = await liff.shareTargetPicker([
+          {
+            type: 'flex',
+            altText: 'Danlio 的數位名片',
+            contents: flexMessage
+          }
+        ]);
+
+        if (result) {
+          showStatus('✅ 名片分享成功！', 'success');
+        } else {
+          showStatus('已取消分享', 'info');
+        }
+      } catch (error) {
+        console.error('分享失敗:', error);
+        showStatus('分享失敗: ' + error.message, 'error');
+      }
+      
+      showLoading(false);
+    }
+
+    // 預覽名片（用 alert 簡單顯示）
+    function previewCard() {
+      alert('名片包含 3 張卡片：\n\n1️⃣ 個人資訊\n2️⃣ 聯絡方式\n3️⃣ 社群連結\n\n點擊「分享我的名片」即可發送給好友！');
+    }
+
+    // 顯示狀態訊息
+    function showStatus(message, type) {
+      const statusEl = document.getElementById('status');
+      statusEl.className = 'status ' + type;
+      statusEl.textContent = message;
+    }
+
+    // 顯示/隱藏 loading
+    function showLoading(show) {
+      const loadingEl = document.getElementById('loading');
+      const btnEl = document.getElementById('shareBtn');
+      
+      if (show) {
+        loadingEl.classList.add('show');
+        btnEl.disabled = true;
+      } else {
+        loadingEl.classList.remove('show');
+        btnEl.disabled = false;
+      }
+    }
+
+    // 頁面載入時初始化
+    window.onload = initLiff;
+  </script>
+</body>
+</html>
