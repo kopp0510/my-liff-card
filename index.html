@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -141,342 +142,228 @@
     // 你的 LIFF ID
     const LIFF_ID = '2008621616-5R4edpe4';
     
-    // Flex Message 名片內容（可以橫向滑動的多卡片）
+    // Flex Message 名片內容
     const flexMessage = {
-      type: 'carousel',
-      contents: [
-        // 第一張卡片 - 個人資訊
+      "type": "carousel",
+      "contents": [
         {
-          type: 'bubble',
-          size: 'mega',
-          header: {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
-              {
-                type: 'box',
-                layout: 'horizontal',
-                contents: [
-                  {
-                    type: 'box',
-                    layout: 'vertical',
-                    contents: [
-                      {
-                        type: 'text',
-                        text: 'Danlio',
-                        color: '#ffffff',
-                        size: 'xl',
-                        weight: 'bold'
-                      },
-                      {
-                        type: 'text',
-                        text: '打工仔',
-                        color: '#ffffff99',
-                        size: 'md'
-                      }
-                    ],
-                    flex: 1
-                  },
-                  {
-                    type: 'box',
-                    layout: 'vertical',
-                    contents: [
-                      {
-                        type: 'text',
-                        text: 'D',
-                        color: '#667eea',
-                        size: 'xxl',
-                        weight: 'bold',
-                        align: 'center'
-                      }
-                    ],
-                    width: '60px',
-                    height: '60px',
-                    backgroundColor: '#ffffff',
-                    cornerRadius: '30px',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }
-                ],
-                alignItems: 'center'
-              }
-            ],
-            backgroundColor: '#667eea',
-            paddingAll: '20px'
+          "type": "bubble",
+          "hero": {
+            "type": "image",
+            "size": "full",
+            "aspectRatio": "20:13",
+            "aspectMode": "cover",
+            "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=520&fit=crop"
           },
-          body: {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
               {
-                type: 'text',
-                text: '關於我',
-                weight: 'bold',
-                size: 'lg',
-                margin: 'none'
+                "type": "text",
+                "text": "Danlio",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl"
               },
               {
-                type: 'text',
-                text: '嗨！我是 Danlio，一個努力工作的打工仔。很高興認識你！',
-                wrap: true,
-                color: '#666666',
-                size: 'sm',
-                margin: 'md'
-              },
-              {
-                type: 'separator',
-                margin: 'xl'
-              },
-              {
-                type: 'box',
-                layout: 'vertical',
-                contents: [
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
                   {
-                    type: 'box',
-                    layout: 'horizontal',
-                    contents: [
-                      {
-                        type: 'text',
-                        text: '📍',
-                        size: 'sm',
-                        flex: 0
-                      },
-                      {
-                        type: 'text',
-                        text: '台灣',
-                        size: 'sm',
-                        color: '#666666',
-                        margin: 'md'
-                      }
-                    ]
-                  },
-                  {
-                    type: 'box',
-                    layout: 'horizontal',
-                    contents: [
-                      {
-                        type: 'text',
-                        text: '💼',
-                        size: 'sm',
-                        flex: 0
-                      },
-                      {
-                        type: 'text',
-                        text: '什麼都做',
-                        size: 'sm',
-                        color: '#666666',
-                        margin: 'md'
-                      }
-                    ],
-                    margin: 'sm'
+                    "type": "text",
+                    "text": "打工仔",
+                    "wrap": true,
+                    "weight": "bold",
+                    "size": "md",
+                    "color": "#666666",
+                    "flex": 0
                   }
-                ],
-                margin: 'xl'
-              }
-            ],
-            paddingAll: '20px'
-          },
-          footer: {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
+                ]
+              },
               {
-                type: 'button',
-                action: {
-                  type: 'uri',
-                  label: '💬 加我 LINE',
-                  uri: 'https://line.me/ti/p/~danlio'
-                },
-                style: 'primary',
-                color: '#06C755'
+                "type": "text",
+                "text": "📍 台灣",
+                "wrap": true,
+                "size": "sm",
+                "margin": "md",
+                "color": "#888888",
+                "flex": 0
               }
-            ],
-            paddingAll: '15px'
+            ]
+          },
+          "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "button",
+                "style": "primary",
+                "color": "#06C755",
+                "action": {
+                  "type": "uri",
+                  "label": "💬 加我 LINE",
+                  "uri": "https://line.me/ti/p/~danlio"
+                }
+              },
+              {
+                "type": "button",
+                "action": {
+                  "type": "uri",
+                  "label": "📞 打電話給我",
+                  "uri": "tel:0912345678"
+                }
+              }
+            ]
           }
         },
-        // 第二張卡片 - 聯絡方式
         {
-          type: 'bubble',
-          size: 'mega',
-          header: {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
-              {
-                type: 'text',
-                text: '📞 聯絡方式',
-                color: '#ffffff',
-                size: 'lg',
-                weight: 'bold'
-              }
-            ],
-            backgroundColor: '#764ba2',
-            paddingAll: '20px'
+          "type": "bubble",
+          "hero": {
+            "type": "image",
+            "size": "full",
+            "aspectRatio": "20:13",
+            "aspectMode": "cover",
+            "url": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=520&fit=crop"
           },
-          body: {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
               {
-                type: 'text',
-                text: '歡迎透過以下方式聯繫我',
-                color: '#666666',
-                size: 'sm',
-                wrap: true
+                "type": "text",
+                "text": "聯絡資訊",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl"
               },
               {
-                type: 'separator',
-                margin: 'xl'
-              },
-              {
-                type: 'box',
-                layout: 'vertical',
-                contents: [
+                "type": "box",
+                "layout": "vertical",
+                "margin": "lg",
+                "contents": [
                   {
-                    type: 'box',
-                    layout: 'horizontal',
-                    contents: [
-                      {
-                        type: 'text',
-                        text: '📱 電話',
-                        size: 'sm',
-                        color: '#999999',
-                        flex: 0
-                      },
-                      {
-                        type: 'text',
-                        text: '0912-345-678',
-                        size: 'sm',
-                        color: '#333333',
-                        align: 'end'
-                      }
-                    ]
+                    "type": "text",
+                    "text": "📱 0912-345-678",
+                    "size": "sm",
+                    "color": "#555555"
                   },
                   {
-                    type: 'box',
-                    layout: 'horizontal',
-                    contents: [
-                      {
-                        type: 'text',
-                        text: '✉️ Email',
-                        size: 'sm',
-                        color: '#999999',
-                        flex: 0
-                      },
-                      {
-                        type: 'text',
-                        text: 'danlio@email.com',
-                        size: 'sm',
-                        color: '#333333',
-                        align: 'end'
-                      }
-                    ],
-                    margin: 'lg'
+                    "type": "text",
+                    "text": "✉️ danlio@email.com",
+                    "size": "sm",
+                    "color": "#555555",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "text",
+                    "text": "🌐 www.danlio.com",
+                    "size": "sm",
+                    "color": "#555555",
+                    "margin": "sm"
                   }
-                ],
-                margin: 'xl'
+                ]
               }
-            ],
-            paddingAll: '20px'
+            ]
           },
-          footer: {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
+          "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
               {
-                type: 'button',
-                action: {
-                  type: 'uri',
-                  label: '📞 打電話給我',
-                  uri: 'tel:0912345678'
-                },
-                style: 'primary',
-                color: '#764ba2'
+                "type": "button",
+                "style": "primary",
+                "color": "#5865F2",
+                "action": {
+                  "type": "uri",
+                  "label": "✉️ 寄 Email 給我",
+                  "uri": "mailto:danlio@email.com"
+                }
               },
               {
-                type: 'button',
-                action: {
-                  type: 'uri',
-                  label: '✉️ 寄 Email',
-                  uri: 'mailto:danlio@email.com'
-                },
-                style: 'secondary',
-                margin: 'sm'
+                "type": "button",
+                "action": {
+                  "type": "uri",
+                  "label": "🌐 看我的網站",
+                  "uri": "https://www.google.com"
+                }
               }
-            ],
-            paddingAll: '15px'
+            ]
           }
         },
-        // 第三張卡片 - 社群連結
         {
-          type: 'bubble',
-          size: 'mega',
-          header: {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
-              {
-                type: 'text',
-                text: '🌐 社群連結',
-                color: '#ffffff',
-                size: 'lg',
-                weight: 'bold'
-              }
-            ],
-            backgroundColor: '#E4405F',
-            paddingAll: '20px'
+          "type": "bubble",
+          "hero": {
+            "type": "image",
+            "size": "full",
+            "aspectRatio": "20:13",
+            "aspectMode": "cover",
+            "url": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=520&fit=crop"
           },
-          body: {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
               {
-                type: 'text',
-                text: '追蹤我的社群帳號，獲得最新動態！',
-                color: '#666666',
-                size: 'sm',
-                wrap: true
-              }
-            ],
-            paddingAll: '20px'
-          },
-          footer: {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
-              {
-                type: 'button',
-                action: {
-                  type: 'uri',
-                  label: '📘 Facebook',
-                  uri: 'https://facebook.com'
-                },
-                style: 'primary',
-                color: '#1877F2'
+                "type": "text",
+                "text": "社群媒體",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl"
               },
               {
-                type: 'button',
-                action: {
-                  type: 'uri',
-                  label: '📸 Instagram',
-                  uri: 'https://instagram.com'
-                },
-                style: 'primary',
-                color: '#E4405F',
-                margin: 'sm'
+                "type": "box",
+                "layout": "vertical",
+                "margin": "lg",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "追蹤我的社群帳號",
+                    "size": "sm",
+                    "color": "#555555"
+                  },
+                  {
+                    "type": "text",
+                    "text": "獲得最新動態！",
+                    "size": "sm",
+                    "color": "#555555",
+                    "margin": "sm"
+                  }
+                ]
+              }
+            ]
+          },
+          "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "button",
+                "style": "primary",
+                "color": "#E4405F",
+                "action": {
+                  "type": "uri",
+                  "label": "📸 Instagram",
+                  "uri": "https://instagram.com"
+                }
               },
               {
-                type: 'button',
-                action: {
-                  type: 'uri',
-                  label: '🌐 個人網站',
-                  uri: 'https://google.com'
-                },
-                style: 'secondary',
-                margin: 'sm'
+                "type": "button",
+                "style": "primary",
+                "color": "#1877F2",
+                "action": {
+                  "type": "uri",
+                  "label": "📘 Facebook",
+                  "uri": "https://facebook.com"
+                }
               }
-            ],
-            paddingAll: '15px'
+            ]
           }
         }
       ]
@@ -534,9 +421,9 @@
       showLoading(false);
     }
 
-    // 預覽名片（用 alert 簡單顯示）
+    // 預覽名片
     function previewCard() {
-      alert('名片包含 3 張卡片：\n\n1️⃣ 個人資訊\n2️⃣ 聯絡方式\n3️⃣ 社群連結\n\n點擊「分享我的名片」即可發送給好友！');
+      alert('名片包含 3 張卡片：\n\n1️⃣ 個人資訊 + 加LINE/打電話\n2️⃣ 聯絡資訊 + Email/網站\n3️⃣ 社群媒體 + IG/FB\n\n點擊「分享我的名片」即可發送給好友！');
     }
 
     // 顯示狀態訊息
